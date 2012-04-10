@@ -1,0 +1,61 @@
+<% if signed_in? %>
+  <table class="front" summary="For signed-in users">
+    <tr>
+      <td class="main">
+        <h1 class="micropost">What's up?</h1>
+            <%= form_for @micropost do |f| %>
+               <% if @micropost.errors.any? %>
+                  <div id="error_explanation">
+                    <h2><%= pluralize(@user.errors.count, "error") %>
+                        prohibited this user from being saved:</h2>
+                    <p>There were problems with the following fields:</p>
+                    <ul>
+                    <% @user.errors.full_messages.each do |msg| %>
+                      <li><%= msg %></li>
+                    <% end %>
+                    </ul>
+                  </div>
+                <% end %>
+              <div class="field">
+                <%= f.text_area :content %>
+              </div>
+              <div class="actions">
+                <%= f.submit "Submit" %>
+              </div>
+            <% end %>
+        <%= will_paginate @feed_items %>
+        <% unless @feed_items.empty? %>
+          <table class="microposts" summary="User microposts">
+            <%= render :partial => 'shared/feed_item', :collection => @feed_items %>
+          </table>
+          <%= will_paginate @feed_items %>
+        <% end %>
+      </td>
+      <td class="sidebar round">
+        <div class="user_info">
+          <a href="<%= user_path(current_user) %>">
+            <%= gravatar_for current_user, :size => 30 %>
+            <span class="user_name">
+              <%= current_user.name %>
+            </span>
+            <span class="microposts">
+              <%= pluralize(current_user.microposts.count, "micropost") %>
+            </span>
+          </a>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+<% else %>
+  <h1>Sample App</h1>
+
+  <p>
+    This is the home page for the
+    <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a>
+    sample application.
+  </p>
+
+  <%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
+
+<% end %>
