@@ -15,7 +15,7 @@ TestProj::Application.routes.draw do
   get "pages/contact"
   get "pages/about"
 
-  match '/home', :to => 'pages#home'
+  match '/', :to => 'pages#home'
   match '/contact', :to => 'pages#contact'
   match '/about',   :to => 'pages#about'
   match '/help',    :to => 'pages#help'
